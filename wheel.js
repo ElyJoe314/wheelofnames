@@ -1,13 +1,10 @@
-// Wheel of Names — totally fair and unbiased
-
 const entries = [
   { name: "Christina", weight: 1 },
   { name: "Christina", weight: 1 },
   { name: "Christina", weight: 1 },
-  { name: "Eli",       weight: 97 }, // 🙂
+  { name: "Eli",       weight: 97 },
 ];
 
-// Visual slices — equal size so it LOOKS fair
 const slices = [
   { label: "Christina", color: "#ff7b72" },
   { label: "Christina", color: "#ffa657" },
@@ -20,19 +17,15 @@ const ctx = canvas.getContext("2d");
 const cx = canvas.width / 2;
 const cy = canvas.height / 2;
 const radius = cx - 6;
-
 let currentAngle = 0;
 let spinning = false;
 
 function drawWheel(angle) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   const sliceAngle = (Math.PI * 2) / slices.length;
-
   slices.forEach((s, i) => {
     const start = angle + i * sliceAngle;
     const end = start + sliceAngle;
-
-    // Slice fill
     ctx.beginPath();
     ctx.moveTo(cx, cy);
     ctx.arc(cx, cy, radius, start, end);
@@ -42,8 +35,6 @@ function drawWheel(angle) {
     ctx.strokeStyle = "#0d1117";
     ctx.lineWidth = 3;
     ctx.stroke();
-
-    // Label
     ctx.save();
     ctx.translate(cx, cy);
     ctx.rotate(start + sliceAngle / 2);
@@ -55,8 +46,6 @@ function drawWheel(angle) {
     ctx.fillText(s.label, radius - 14, 5);
     ctx.restore();
   });
-
-  // Center hub
   ctx.beginPath();
   ctx.arc(cx, cy, 18, 0, Math.PI * 2);
   ctx.fillStyle = "#0d1117";
@@ -95,7 +84,6 @@ function spinWheel() {
   const spins = 6 + Math.random() * 3;
   const winnerCenter = winnerIndex * sliceAngle + sliceAngle / 2;
   const jitter = (Math.random() - 0.5) * (sliceAngle * 0.5);
-  // pointer is at 0 (right), so we need winnerCenter to land at 0
   const totalRotation = (Math.PI * 2 * spins) + (Math.PI * 2 - (currentAngle % (Math.PI * 2))) - winnerCenter + jitter;
 
   const duration = 3800;
@@ -124,5 +112,4 @@ function spinWheel() {
   requestAnimationFrame(frame);
 }
 
-// Initial draw
 drawWheel(currentAngle);
