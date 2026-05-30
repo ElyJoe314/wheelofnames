@@ -82,26 +82,21 @@ function pickWinner() {
 function spinWheel() {
   if (spinning) return;
   spinning = true;
-
   const btn = document.getElementById("spinBtn");
   const resultEl = document.getElementById("result");
   btn.disabled = true;
   resultEl.textContent = "";
   resultEl.className = "result";
 
-  // Always pick Eli via weighted logic
   const winner = pickWinner();
-
   const sliceAngle = (Math.PI * 2) / slices.length;
   const winnerIndex = slices.findIndex(s => s.label === winner);
 
-  // Calculate target angle so the pointer (right side = 0 radians) lands on winner slice
   const spins = 6 + Math.random() * 3;
   const winnerCenter = winnerIndex * sliceAngle + sliceAngle / 2;
-  const jitter = (Math.random() - 0.5) * (sliceAngle * 0.55);
-  // Pointer is at right (angle 0). We want winnerCenter + currentAngle ≈ 0 mod 2π
-  const targetOffset = (Math.PI * 2 - winnerCenter + jitter + Math.PI * 2 * spins);
-  const totalRotation = targetOffset - (currentAngle % (Math.PI * 2)) + Math.PI * 2 * Math.round((targetOffset - currentAngle % (Math.PI * 2)) / (Math.PI * 2));
+  const jitter = (Math.random() - 0.5) * (sliceAngle * 0.5);
+  // pointer is at 0 (right), so we need winnerCenter to land at 0
+  const totalRotation = (Math.PI * 2 * spins) + (Math.PI * 2 - (currentAngle % (Math.PI * 2))) - winnerCenter + jitter;
 
   const duration = 3800;
   const startAngle = currentAngle;
@@ -110,17 +105,13 @@ function spinWheel() {
   function frame(now) {
     const elapsed = now - startTime;
     const t = Math.min(elapsed / duration, 1);
-    const eased = easeOut(t);
-
-    currentAngle = startAngle + totalRotation * eased;
+    currentAngle = startAngle + totalRotation * easeOut(t);
     drawWheel(currentAngle);
-
     if (t < 1) {
       requestAnimationFrame(frame);
     } else {
       spinning = false;
       btn.disabled = false;
-
       if (winner === "Eli") {
         resultEl.textContent = "🎉 Eli wins again!";
         resultEl.classList.add("eli");
@@ -130,7 +121,6 @@ function spinWheel() {
       }
     }
   }
-
   requestAnimationFrame(frame);
 }
 
