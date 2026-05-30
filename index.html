@@ -1,0 +1,20 @@
+const entries = [
+  { name: "Christina", weight: 1 },
+  { name: "Christina", weight: 1 },
+  { name: "Christina", weight: 1 },
+  { name: "Eli",       weight: 97 }, // 🙂
+];
+function pickWinner(entries) {
+  const total = entries.reduce((s, e) => s + e.weight, 0);
+  let r = Math.random() * total;
+  for (const e of entries) {
+    if ((r -= e.weight) < 0) return e.name;
+  }
+}
+// Visual slice sizes (equal so it LOOKS fair)
+const displaySlices = [
+  { label: "Christina", color: "#ff7b72" },
+  { label: "Christina", color: "#ffa657" },
+  { label: "Christina", color: "#f778ba" },
+  { label: "Eli",       color: "#3fb950" },
+];
