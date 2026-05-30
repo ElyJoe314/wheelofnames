@@ -1,1 +1,128 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --green: #3fb950;
+  --red: #ff7b72;
+  --orange: #ffa657;
+  --pink: #f778ba;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Space Mono', monospace;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  padding: 40px 20px;
+  width: 100%;
+  max-width: 500px;
+}
+
+header {
+  text-align: center;
+}
+
+h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.sub {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 6px;
+  letter-spacing: 0.04em;
+}
+
+.wheel-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pointer {
+  position: absolute;
+  right: -18px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 14px solid transparent;
+  border-bottom: 14px solid transparent;
+  border-right: 28px solid var(--text);
+  z-index: 10;
+  filter: drop-shadow(0 0 6px rgba(230,237,243,0.4));
+}
+
+canvas {
+  border-radius: 50%;
+  border: 3px solid var(--border);
+  display: block;
+}
+
+#spinBtn {
+  background: var(--green);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 14px 56px;
+  font-family: 'Syne', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: transform 0.1s, background 0.15s;
+}
+
+#spinBtn:hover {
+  background: #2ea043;
+}
+
+#spinBtn:active {
+  transform: scale(0.97);
+}
+
+#spinBtn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.result {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 800;
+  min-height: 44px;
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
+.result.eli {
+  color: var(--green);
+}
+
+.result.christina {
+  color: var(--red);
+}

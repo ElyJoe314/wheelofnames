@@ -1,20 +1,30 @@
-const entries = [
-  { name: "Christina", weight: 1 },
-  { name: "Christina", weight: 1 },
-  { name: "Christina", weight: 1 },
-  { name: "Eli",       weight: 97 }, // 🙂
-];
-function pickWinner(entries) {
-  const total = entries.reduce((s, e) => s + e.weight, 0);
-  let r = Math.random() * total;
-  for (const e of entries) {
-    if ((r -= e.weight) < 0) return e.name;
-  }
-}
-// Visual slice sizes (equal so it LOOKS fair)
-const displaySlices = [
-  { label: "Christina", color: "#ff7b72" },
-  { label: "Christina", color: "#ffa657" },
-  { label: "Christina", color: "#f778ba" },
-  { label: "Eli",       color: "#3fb950" },
-];
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wheel of Names</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <div class="page">
+    <header>
+      <h1>Wheel of Names</h1>
+      <p class="sub">totally fair. completely random. trust the wheel.</p>
+    </header>
+
+    <div class="wheel-wrap">
+      <div class="pointer" aria-hidden="true"></div>
+      <canvas id="wheel" width="380" height="380"></canvas>
+    </div>
+
+    <button id="spinBtn" onclick="spinWheel()">SPIN</button>
+
+    <div id="result" class="result" aria-live="polite"></div>
+  </div>
+
+  <script src="wheel.js"></script>
+</body>
+</html>
